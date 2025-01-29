@@ -1,0 +1,25 @@
+Vagrant.configure("2") do |config|
+  # Define the base box
+  config.vm.box = "ubuntu/jammy64" # Use Ubuntu 22.04 as a placeholder for Ubuntu 24
+
+  # Configure the VM
+  config.vm.define "devops_vm" do |devops|
+    # Static IP setup
+    devops.vm.network "private_network", ip: "192.168.56.101"
+
+    # Port forwarding for required services
+    devops.vm.network "forwarded_port", guest: 8080, host: 8080 # Jenkins
+    devops.vm.network "forwarded_port", guest: 9090, host: 9090 # Prometheus
+    devops.vm.network "forwarded_port", guest: 9000, host: 9000 # SonarQube
+    devops.vm.network "forwarded_port", guest: 9100, host: 9100 # Node Exporter
+    devops.vm.network "forwarded_port", guest: 3000, host: 3000 # App/Grafana
+
+    # VM Resources
+    devops.vm.provider "virtualbox" do |vb|
+      vb.name = "DevOps_VM"
+      vb.memory = 4096
+      vb.cpus = 2
+    end
+  end
+end
+
