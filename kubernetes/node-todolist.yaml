@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todolist-service
+  labels:
+    app: todolist
+spec:
+  selector:
+    app: todolist
+  ports:
+  - port: 80
+    targetPort: 3000  # Make sure this matches your container's exposed port
+  type: NodePort  # Expose via NodePort or use LoadBalancer if your cluster supports it
